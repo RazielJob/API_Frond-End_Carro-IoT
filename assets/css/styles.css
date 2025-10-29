@@ -1,0 +1,4 @@
+/* Minimal custom styles for the frontend demo */
+body { background: #ffffff; }
+#events { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Segoe UI Mono', 'Roboto Mono', monospace; font-size:0.9rem; }
+.card { box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.035); }

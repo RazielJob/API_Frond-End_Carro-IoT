@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Control y Monitor IoT - Demo</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">IoT Carrito - Control</a>
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <span class="nav-link">Back-end: 52.4.229.72:5500</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container mt-4">
+      <div class="row g-3">
+        <!-- Control panel -->
+        <section class="col-lg-4">
+          <div class="card">
+            <div class="card-header">Panel de Control</div>
+            <div class="card-body">
+              <div class="mb-2">
+                <label class="form-label">Device ID</label>
+                <input
+                  id="deviceId"
+                  class="form-control"
+                  type="number"
+                  value="1"
+                />
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Client ID</label>
+                <input
+                  id="clientId"
+                  class="form-control"
+                  type="number"
+                  value="1"
+                />
+              </div>
+
+              <div class="d-grid gap-2">
+                <div class="btn-group w-100" role="group">
+                  <button id="btnForward" class="btn btn-success">
+                    Adelante
+                  </button>
+                  <button id="btnBack" class="btn btn-warning">Atrás</button>
+                </div>
+                <div class="btn-group w-100" role="group">
+                  <button id="btnLeft" class="btn btn-secondary">
+                    Izquierda
+                  </button>
+                  <button id="btnStop" class="btn btn-danger">Detener</button>
+                  <button id="btnRight" class="btn btn-secondary">
+                    Derecha
+                  </button>
+                </div>
+              </div>
+
+              <hr />
+              <h6>Operación manual</h6>
+              <div class="input-group mb-2">
+                <label class="input-group-text">id_operacion</label>
+                <input id="opId" type="number" class="form-control" value="1" />
+                <button id="btnSendOp" class="btn btn-outline-primary">
+                  Enviar
+                </button>
+              </div>
+              <small class="text-muted"
+                >Sugerencia de mapeo (ver DB): 1=Adelante,2=Atrás,3=Detener.
+                Ajusta según tu tabla `Operations`.</small
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- Monitor / Demo -->
+        <section class="col-lg-5">
+          <div class="card">
+            <div class="card-header">Monitor en tiempo real</div>
+            <div class="card-body">
+              <div id="wsStatus" class="mb-2">
+                WebSocket: <span class="badge bg-secondary">Desconectado</span>
+              </div>
+              <div
+                id="events"
+                class="border rounded p-2"
+                style="height: 320px; overflow: auto; background: #f8f9fa"
+              ></div>
+            </div>
+            <div class="card-footer">
+              <button id="btnConnectWs" class="btn btn-sm btn-outline-success">
+                Conectar WebSocket
+              </button>
+              <button
+                id="btnCheckBackend"
+                class="btn btn-sm btn-outline-info ms-2"
+              >
+                Comprobar Backend
+              </button>
+              <button
+                id="btnLoadHistory"
+                class="btn btn-sm btn-outline-primary ms-2"
+              >
+                Cargar Historial (device)
+              </button>
+              <input
+                id="historyCount"
+                type="number"
+                value="10"
+                min="1"
+                class="form-control form-control-sm d-inline-block ms-2"
+                style="width: 80px; vertical-align: middle"
+              />
+              <button
+                id="btnClearLog"
+                class="btn btn-sm btn-outline-secondary ms-2"
+              >
+                Limpiar
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Last event & quick calls -->
+        <section class="col-lg-3">
+          <div class="card mb-3">
+            <div class="card-header">Último Evento</div>
+            <div class="card-body">
+              <label class="form-label">ID dispositivo</label>
+              <input
+                id="lastDeviceId"
+                type="number"
+                class="form-control"
+                value="1"
+              />
+              <button
+                id="btnGetLast"
+                class="btn btn-outline-primary w-100 mt-2"
+              >
+                Obtener Último
+              </button>
+              <pre
+                id="lastOutput"
+                class="mt-2 small"
+                style="white-space: pre-wrap"
+              ></pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">Obstáculo (simular)</div>
+            <div class="card-body">
+              <div class="mb-2">
+                <label class="form-label">id_obstaculo</label>
+                <input
+                  id="obstId"
+                  type="number"
+                  class="form-control"
+                  value="1"
+                />
+              </div>
+              <button id="btnSendObst" class="btn btn-outline-danger w-100">
+                Enviar Obstáculo
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="text-center mt-4 mb-4 small text-muted">
+      Diseñado para demo. Cambia la IP/PUERTO en `assets/js/main.js` si es
+      necesario.
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

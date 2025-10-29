@@ -12,16 +12,16 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">IoT Carrito - Control</a>
+        <a class="navbar-brand fw-bold" href="#">🚗 IoT Carrito</a>
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <a class="nav-link" href="monitor/">Monitor</a>
             </li>
             <li class="nav-item">
-              <span class="nav-link">Back-end: 52.4.229.72:5500</span>
+              <span class="nav-link text-muted">52.4.229.72:5500</span>
             </li>
           </ul>
         </div>
@@ -29,153 +29,267 @@
     </nav>
 
     <main class="container mt-4">
-      <div class="row g-3">
+      <div class="row g-4">
         <!-- Control panel -->
-        <section class="col-lg-4">
-          <div class="card">
-            <div class="card-header">Panel de Control</div>
+        <section class="col-lg-5">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+              <h5 class="mb-0">Panel de Control</h5>
+            </div>
             <div class="card-body">
-              <div class="mb-2">
-                <label class="form-label">Device ID</label>
-                <input
-                  id="deviceId"
-                  class="form-control"
-                  type="number"
-                  value="1"
-                />
-              </div>
-              <div class="mb-2">
-                <label class="form-label">Client ID</label>
-                <input
-                  id="clientId"
-                  class="form-control"
-                  type="number"
-                  value="1"
-                />
-              </div>
-
-              <div class="d-grid gap-2">
-                <div class="btn-group w-100" role="group">
-                  <button id="btnForward" class="btn btn-success">
-                    Adelante
-                  </button>
-                  <button id="btnBack" class="btn btn-warning">Atrás</button>
+              <!-- Device & Client IDs -->
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label small text-muted">Device ID</label>
+                  <input
+                    id="deviceId"
+                    class="form-control form-control-sm"
+                    type="number"
+                    value="1"
+                  />
                 </div>
-                <div class="btn-group w-100" role="group">
-                  <button id="btnLeft" class="btn btn-secondary">
-                    Izquierda
-                  </button>
-                  <button id="btnStop" class="btn btn-danger">Detener</button>
-                  <button id="btnRight" class="btn btn-secondary">
-                    Derecha
-                  </button>
+                <div class="col-6">
+                  <label class="form-label small text-muted">Client ID</label>
+                  <input
+                    id="clientId"
+                    class="form-control form-control-sm"
+                    type="number"
+                    value="1"
+                  />
                 </div>
               </div>
 
-              <hr />
-              <h6>Operación manual</h6>
-              <div class="input-group mb-2">
-                <label class="input-group-text">id_operacion</label>
+              <!-- Controles principales en grid -->
+              <div class="control-grid mb-3">
+                <!-- Fila 1: Giros izquierda -->
+                <button
+                  id="btnTurnLeft"
+                  class="btn btn-control btn-teal"
+                  title="Vuelta izquierda (ID: 6)"
+                >
+                  Vuelta izquierda
+                </button>
+                <button
+                  id="btnForward"
+                  class="btn btn-control btn-primary"
+                  title="Adelante (ID: 1)"
+                >
+                  Adelante
+                </button>
+                <button
+                  id="btnTurnRight"
+                  class="btn btn-control btn-teal"
+                  title="Vuelta derecha (ID: 9)"
+                >
+                  Vuelta derecha
+                </button>
+
+                <!-- Fila 2: 360 y 90 grados -->
+                <button
+                  id="btn360Left"
+                  class="btn btn-control btn-teal"
+                  title="360° Izquierda (ID: 8)"
+                >
+                  360° Izquierda
+                </button>
+                <button
+                  id="btn90Left"
+                  class="btn btn-control btn-teal"
+                  title="90° Izquierda (ID: 7)"
+                >
+                  90° Izquierda
+                </button>
+                <button
+                  id="btnStop"
+                  class="btn btn-control btn-danger"
+                  title="Detener (ID: 3)"
+                >
+                  Detener
+                </button>
+                <button
+                  id="btn90Right"
+                  class="btn btn-control btn-teal"
+                  title="90° Derecha (ID: 10)"
+                >
+                  90° derecha
+                </button>
+                <button
+                  id="btn360Right"
+                  class="btn btn-control btn-teal"
+                  title="360° Derecha (ID: 11)"
+                >
+                  360° derecha
+                </button>
+
+                <!-- Fila 3: Básicos -->
+                <button
+                  id="btnLeft"
+                  class="btn btn-control btn-teal"
+                  title="Izquierda (ID: 4)"
+                >
+                  Vuelta izquierda
+                </button>
+                <button
+                  id="btnBack"
+                  class="btn btn-control btn-warning"
+                  title="Atrás (ID: 2)"
+                >
+                  Atrás
+                </button>
+                <button
+                  id="btnRight"
+                  class="btn btn-control btn-teal"
+                  title="Derecha (ID: 5)"
+                >
+                  Vuelta derecha
+                </button>
+              </div>
+
+              <div class="text-center mb-3">
+                <small class="text-muted d-block"
+                  >Estado: <strong id="statusText">Esperando...</strong></small
+                >
+              </div>
+
+              <hr class="my-4" />
+
+              <!-- Operación manual -->
+              <h6 class="mb-3">Operación manual</h6>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text">id_operacion</span>
                 <input id="opId" type="number" class="form-control" value="1" />
                 <button id="btnSendOp" class="btn btn-outline-primary">
                   Enviar
                 </button>
               </div>
-              <small class="text-muted"
-                >Sugerencia de mapeo (ver DB): 1=Adelante,2=Atrás,3=Detener.
-                Ajusta según tu tabla `Operations`.</small
-              >
+              <small class="text-muted d-block mb-3">
+                IDs: 1=Adelante, 2=Atrás, 3=Detener, 4=Izq, 5=Der, 6=VueltaIzq,
+                7=90°Izq, 8=360°Izq, 9=VueltaDer, 10=90°Der, 11=360°Der
+              </small>
+
+              <!-- Generar secuencia aleatoria -->
+              <h6 class="mb-3">Generar secuencia aleatoria</h6>
+              <div class="input-group input-group-sm mb-2">
+                <span class="input-group-text">Longitud</span>
+                <input
+                  id="seqLength"
+                  type="number"
+                  class="form-control"
+                  value="5"
+                  min="1"
+                />
+                <button id="btnGenerateSeq" class="btn btn-outline-success">
+                  Generar
+                </button>
+              </div>
+              <pre
+                id="seqOutput"
+                class="bg-light p-2 rounded small mb-0"
+                style="white-space: pre-wrap; max-height: 100px; overflow: auto"
+              ></pre>
             </div>
           </div>
         </section>
 
         <!-- Monitor / Demo -->
-        <section class="col-lg-5">
-          <div class="card">
-            <div class="card-header">Monitor en tiempo real</div>
+        <section class="col-lg-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+              <h5 class="mb-0">Monitor en tiempo real</h5>
+            </div>
             <div class="card-body">
-              <div id="wsStatus" class="mb-2">
+              <div id="wsStatus" class="mb-3">
                 WebSocket: <span class="badge bg-secondary">Desconectado</span>
               </div>
               <div
                 id="events"
-                class="border rounded p-2"
-                style="height: 320px; overflow: auto; background: #f8f9fa"
+                class="border rounded p-2 bg-light"
+                style="height: 380px; overflow: auto"
               ></div>
             </div>
-            <div class="card-footer">
-              <button id="btnConnectWs" class="btn btn-sm btn-outline-success">
-                Conectar WebSocket
-              </button>
-              <button
-                id="btnCheckBackend"
-                class="btn btn-sm btn-outline-info ms-2"
-              >
-                Comprobar Backend
-              </button>
-              <button
-                id="btnLoadHistory"
-                class="btn btn-sm btn-outline-primary ms-2"
-              >
-                Cargar Historial (device)
-              </button>
-              <input
-                id="historyCount"
-                type="number"
-                value="10"
-                min="1"
-                class="form-control form-control-sm d-inline-block ms-2"
-                style="width: 80px; vertical-align: middle"
-              />
-              <button
-                id="btnClearLog"
-                class="btn btn-sm btn-outline-secondary ms-2"
-              >
-                Limpiar
-              </button>
+            <div class="card-footer bg-white border-0 pb-3">
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <button
+                  id="btnConnectWs"
+                  class="btn btn-sm btn-outline-success"
+                >
+                  Conectar WS
+                </button>
+                <button
+                  id="btnCheckBackend"
+                  class="btn btn-sm btn-outline-info"
+                >
+                  Comprobar Backend
+                </button>
+                <button
+                  id="btnLoadHistory"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  Historial
+                </button>
+                <input
+                  id="historyCount"
+                  type="number"
+                  value="10"
+                  min="1"
+                  class="form-control form-control-sm"
+                  style="width: 70px"
+                />
+                <button
+                  id="btnClearLog"
+                  class="btn btn-sm btn-outline-secondary"
+                >
+                  Limpiar
+                </button>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- Last event & quick calls -->
+        <!-- Last event & Obstáculo -->
         <section class="col-lg-3">
-          <div class="card mb-3">
-            <div class="card-header">Último Evento</div>
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-header bg-white border-0 pt-3">
+              <h6 class="mb-0">Último Evento</h6>
+            </div>
             <div class="card-body">
-              <label class="form-label">ID dispositivo</label>
+              <label class="form-label small text-muted">ID dispositivo</label>
               <input
                 id="lastDeviceId"
                 type="number"
-                class="form-control"
+                class="form-control form-control-sm mb-2"
                 value="1"
               />
               <button
                 id="btnGetLast"
-                class="btn btn-outline-primary w-100 mt-2"
+                class="btn btn-outline-primary btn-sm w-100"
               >
                 Obtener Último
               </button>
               <pre
                 id="lastOutput"
-                class="mt-2 small"
-                style="white-space: pre-wrap"
+                class="mt-2 bg-light p-2 rounded small"
+                style="white-space: pre-wrap; max-height: 150px; overflow: auto"
               ></pre>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header">Obstáculo (simular)</div>
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+              <h6 class="mb-0">Obstáculo (simular)</h6>
+            </div>
             <div class="card-body">
-              <div class="mb-2">
-                <label class="form-label">id_obstaculo</label>
-                <input
-                  id="obstId"
-                  type="number"
-                  class="form-control"
-                  value="1"
-                />
-              </div>
-              <button id="btnSendObst" class="btn btn-outline-danger w-100">
+              <label class="form-label small text-muted">id_obstaculo</label>
+              <input
+                id="obstId"
+                type="number"
+                class="form-control form-control-sm mb-2"
+                value="1"
+              />
+              <button
+                id="btnSendObst"
+                class="btn btn-outline-danger btn-sm w-100"
+              >
                 Enviar Obstáculo
               </button>
             </div>
@@ -184,9 +298,9 @@
       </div>
     </main>
 
-    <footer class="text-center mt-4 mb-4 small text-muted">
-      Diseñado para demo. Cambia la IP/PUERTO en `assets/js/main.js` si es
-      necesario.
+    <footer class="text-center mt-5 mb-4 small text-muted">
+      Diseñado para demo IoT. Cambia IP/PUERTO en
+      <code>assets/js/main.js</code> si es necesario.
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

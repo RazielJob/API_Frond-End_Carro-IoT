@@ -1,14 +1,11 @@
 // Frontend logic for IoT control and monitoring
-// Adjust BASE_URL and WS_URL if your backend uses a different host/port.
 const BASE_URL = "http://52.4.229.72:5500";
 const WS_URL = "ws://52.4.229.72:5500/ws/monitor";
 
-// Helper to read UI values
 function getUi() {
   return {
     deviceId: Number(document.getElementById("deviceId").value || 1),
     clientId: Number(document.getElementById("clientId").value || 1),
-    // API key removed for demo
   };
 }
 
@@ -22,6 +19,13 @@ function logEvent(obj) {
   events.prepend(line);
 }
 
+function updateStatus(message) {
+  const statusEl = document.getElementById("statusText");
+  if (statusEl) {
+    statusEl.textContent = message;
+  }
+}
+
 async function postMove(id_operacion, id_obstaculo = null) {
   const ui = getUi();
   const payload = {
@@ -30,19 +34,19 @@ async function postMove(id_operacion, id_obstaculo = null) {
     id_operacion,
     id_obstaculo,
   };
+
+  updateStatus(`Enviando operación ${id_operacion}...`);
+
   try {
     const res = await fetch(`${BASE_URL}/api/move`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
     let data = null;
     try {
       data = await res.json();
-    } catch (e) {
-      // body may be empty or non-json
+    } catch {
       data = await res.text().catch(() => null);
     }
     if (!res.ok) {
@@ -52,12 +56,15 @@ async function postMove(id_operacion, id_obstaculo = null) {
         statusText: res.statusText,
         body: data,
       });
+      updateStatus("Error al enviar");
       return { ok: false, status: res.status, body: data };
     }
     logEvent({ type: "move:response", ok: true, data });
+    updateStatus("Comando enviado ✓");
     return data;
   } catch (err) {
     logEvent({ type: "move:error", message: err.message });
+    updateStatus("Error de conexión");
     throw err;
   }
 }
@@ -72,15 +79,13 @@ async function postObstaculo(id_obstaculo) {
   try {
     const res = await fetch(`${BASE_URL}/api/obstaculo`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
     let data = null;
     try {
       data = await res.json();
-    } catch (e) {
+    } catch {
       data = await res.text().catch(() => null);
     }
     if (!res.ok) {
@@ -106,7 +111,7 @@ async function getLast(id_dispositivo) {
     let data = null;
     try {
       data = await res.json();
-    } catch (e) {
+    } catch {
       data = await res.text().catch(() => null);
     }
     if (!res.ok) {
@@ -126,7 +131,7 @@ async function getLast(id_dispositivo) {
   }
 }
 
-// Simple health check to verify backend reachability
+// Health check
 async function checkBackend() {
   try {
     const res = await fetch(`${BASE_URL}/health`);
@@ -179,7 +184,7 @@ function connectWebSocket() {
     try {
       const data = JSON.parse(ev.data);
       logEvent({ type: "ws:msg", data });
-    } catch (err) {
+    } catch {
       logEvent({ type: "ws:msg", raw: ev.data });
     }
   };
@@ -192,34 +197,72 @@ function connectWebSocket() {
   };
 }
 
-// Bind UI
+// Nueva función: Generar secuencia aleatoria
+function generateRandomSequence(length = 5) {
+  const operaciones = [1, 2, 3, 4, 5]; // 1=Adelante, 2=Atrás, 3=Detener, 4=Izquierda, 5=Derecha
+  const sequence = [];
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * operaciones.length);
+    sequence.push(operaciones[randomIndex]);
+  }
+  return sequence;
+}
+
+// Bind UI - TODOS LOS BOTONES REGISTRADOS
 window.addEventListener("DOMContentLoaded", () => {
+  // ========== BOTONES PRINCIPALES ==========
+  // Fila 1
+  document
+    .getElementById("btnTurnLeft")
+    .addEventListener("click", () => postMove(6)); // Vuelta izquierda
   document
     .getElementById("btnForward")
-    .addEventListener("click", () => postMove(1));
+    .addEventListener("click", () => postMove(1)); // Adelante
   document
-    .getElementById("btnBack")
-    .addEventListener("click", () => postMove(2));
+    .getElementById("btnTurnRight")
+    .addEventListener("click", () => postMove(9)); // Vuelta derecha
+
+  // Fila 2
   document
-    .getElementById("btnLeft")
-    .addEventListener("click", () => postMove(4));
+    .getElementById("btn360Left")
+    .addEventListener("click", () => postMove(8)); // 360° Izquierda
   document
-    .getElementById("btnRight")
-    .addEventListener("click", () => postMove(5));
+    .getElementById("btn90Left")
+    .addEventListener("click", () => postMove(7)); // 90° Izquierda
   document
     .getElementById("btnStop")
-    .addEventListener("click", () => postMove(3));
+    .addEventListener("click", () => postMove(3)); // Detener
+  document
+    .getElementById("btn90Right")
+    .addEventListener("click", () => postMove(10)); // 90° Derecha
+  document
+    .getElementById("btn360Right")
+    .addEventListener("click", () => postMove(11)); // 360° Derecha
 
+  // Fila 3
+  document
+    .getElementById("btnLeft")
+    .addEventListener("click", () => postMove(4)); // Izquierda básica
+  document
+    .getElementById("btnBack")
+    .addEventListener("click", () => postMove(2)); // Atrás
+  document
+    .getElementById("btnRight")
+    .addEventListener("click", () => postMove(5)); // Derecha básica
+
+  // ========== OPERACIÓN MANUAL ==========
   document.getElementById("btnSendOp").addEventListener("click", () => {
     const op = Number(document.getElementById("opId").value || 1);
     postMove(op);
   });
 
+  // ========== OBSTÁCULO ==========
   document.getElementById("btnSendObst").addEventListener("click", () => {
     const obst = Number(document.getElementById("obstId").value || 1);
     postObstaculo(obst);
   });
 
+  // ========== ÚLTIMO EVENTO ==========
   document.getElementById("btnGetLast").addEventListener("click", async () => {
     const id = Number(document.getElementById("lastDeviceId").value || 1);
     const out = await getLast(id);
@@ -230,14 +273,19 @@ window.addEventListener("DOMContentLoaded", () => {
     );
   });
 
+  // ========== WEBSOCKET ==========
   document
     .getElementById("btnConnectWs")
     .addEventListener("click", () => connectWebSocket());
+
+  // ========== BACKEND CHECK ==========
   document
     .getElementById("btnCheckBackend")
     .addEventListener("click", async () => {
       await checkBackend();
     });
+
+  // ========== HISTORIAL ==========
   document
     .getElementById("btnLoadHistory")
     .addEventListener("click", async () => {
@@ -245,13 +293,11 @@ window.addEventListener("DOMContentLoaded", () => {
       const count = Number(document.getElementById("historyCount").value || 10);
       try {
         const events = await getEvents(deviceId, count);
-        // show history in the events pane
         document.getElementById("events").innerHTML = "";
         if (!events || events.length === 0) {
           logEvent("No hay eventos recientes");
           return;
         }
-        // events come ordered desc by fecha_hora in backend (most recent first)
         for (const ev of events) {
           logEvent({ type: "history:event", data: ev });
         }
@@ -259,10 +305,21 @@ window.addEventListener("DOMContentLoaded", () => {
         logEvent({ type: "history:error", message: err.message });
       }
     });
+
+  // ========== LIMPIAR LOG ==========
   document.getElementById("btnClearLog").addEventListener("click", () => {
     document.getElementById("events").innerHTML = "";
   });
 
-  // optional: attempt auto-connect
-  // connectWebSocket();
+  // ========== GENERAR SECUENCIA ==========
+  document.getElementById("btnGenerateSeq").addEventListener("click", () => {
+    const length = Number(document.getElementById("seqLength").value || 5);
+    const seq = generateRandomSequence(length);
+    document.getElementById("seqOutput").textContent = JSON.stringify(
+      seq,
+      null,
+      2
+    );
+    logEvent({ type: "sequence:generated", data: seq });
+  });
 });

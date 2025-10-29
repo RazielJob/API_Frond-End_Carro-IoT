@@ -13,83 +13,139 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">IoT Monitor</a>
+        <a class="navbar-brand fw-bold" href="#">📊 IoT Monitor</a>
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="../index.html">Control</a>
+              <a class="nav-link" href="../index.html">← Control</a>
             </li>
             <li class="nav-item">
-              <span class="nav-link text-white small"
-                >Back-end: 52.4.229.72:5500</span
-              >
+              <span class="nav-link text-muted small">52.4.229.72:5500</span>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <main class="container mt-4">
-      <div class="row">
-        <section class="col-md-4">
-          <div class="card">
-            <div class="card-header">Configuración</div>
+    <main class="container-fluid mt-4 px-4">
+      <div class="row g-4">
+        <!-- Panel de configuración -->
+        <section class="col-lg-3">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white border-0 pt-3">
+              <h6 class="mb-0">⚙️ Configuración</h6>
+            </div>
             <div class="card-body">
-                <label class="form-label">Últimos n eventos</label>
-                <input id="limitInput" class="form-control" type="number" value="10" min="1">
+              <!-- Device ID -->
+              <div class="mb-3">
+                <label class="form-label small text-muted">Device ID</label>
                 <input
                   id="deviceId"
-                  class="form-control"
+                  class="form-control form-control-sm"
                   type="number"
-                <div class="d-flex gap-2">
-                  <button id="btnToggleWs" class="btn btn-success">Conectar WebSocket</button>
-                  <button id="btnAutoToggle" class="btn btn-outline-primary">Auto-refresco: OFF</button>
-                  <div id="lastUpdated" class="align-self-center small text-muted ms-2">Última actualización: -</div>
-                </div>
+                  value="1"
+                  min="1"
                 />
               </div>
-              <div class="mb-2">
-                <label class="form-label">Últimos n eventos</label>
+
+              <!-- Límite de eventos -->
+              <div class="mb-3">
+                <label class="form-label small text-muted"
+                  >Últimos n eventos</label
+                >
                 <input
                   id="limitInput"
-                  class="form-control"
+                  class="form-control form-control-sm"
                   type="number"
                   value="20"
                   min="1"
                 />
               </div>
+
+              <!-- Botones de control -->
               <div class="d-grid gap-2">
-                <button id="btnLoad" class="btn btn-primary">
-                  Cargar Historial
+                <button id="btnLoad" class="btn btn-primary btn-sm">
+                  🔄 Cargar Historial
                 </button>
-                <button id="btnClear" class="btn btn-outline-secondary">
-                  Limpiar Lista
+                <button id="btnToggleWs" class="btn btn-success btn-sm">
+                  🔌 Conectar WebSocket
                 </button>
-                <button id="btnToggleWs" class="btn btn-success">
-                  Conectar WebSocket
+                <button id="btnAutoToggle" class="btn btn-outline-info btn-sm">
+                  ⏱️ Auto-refresco: OFF
+                </button>
+                <button id="btnClear" class="btn btn-outline-secondary btn-sm">
+                  🗑️ Limpiar Lista
                 </button>
               </div>
+
+              <!-- Indicador de última actualización -->
+              <div class="mt-3 p-2 bg-light rounded text-center">
+                <small id="lastUpdated" class="text-muted d-block">
+                  Última actualización: -
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Info adicional -->
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-body text-center">
+              <div class="mb-2">
+                <span class="badge bg-success" id="wsStatusBadge"
+                  >WebSocket</span
+                >
+              </div>
+              <small class="text-muted d-block">
+                Conecta el WebSocket para recibir eventos en tiempo real
+              </small>
             </div>
           </div>
         </section>
 
-        <section class="col-md-8">
-          <div class="card">
-            <div class="card-header">Eventos</div>
+        <!-- Panel de eventos -->
+        <section class="col-lg-9">
+          <div class="card border-0 shadow-sm">
+            <div
+              class="card-header bg-white border-0 pt-3 d-flex justify-content-between align-items-center"
+            >
+              <h6 class="mb-0">📡 Eventos en Tiempo Real</h6>
+              <span class="badge bg-secondary" id="eventCount">0 eventos</span>
+            </div>
             <div class="card-body p-0">
               <div
                 id="events"
                 class="list-group list-group-flush"
-                style="max-height: 640px; overflow: auto"
-              ></div>
+                style="max-height: 600px; overflow-y: auto"
+              >
+                <!-- Los eventos se cargarán aquí dinámicamente -->
+                <div class="list-group-item text-center text-muted py-5">
+                  <div class="mb-2">📭</div>
+                  <small
+                    >No hay eventos cargados. Presiona "Cargar Historial" para
+                    comenzar.</small
+                  >
+                </div>
+              </div>
             </div>
-            <div class="card-footer small text-muted">
-              Última actividad en panel
+            <div class="card-footer bg-white border-0 pb-3">
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                  Actualización automática:
+                  <strong id="autoStatus">Desactivado</strong>
+                </small>
+                <small class="text-muted">
+                  Los eventos más recientes aparecen arriba ↑
+                </small>
+              </div>
             </div>
           </div>
         </section>
       </div>
     </main>
+
+    <footer class="text-center mt-4 mb-4 small text-muted">
+      Monitor IoT - Sistema de eventos en tiempo real
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/monitor.js"></script>

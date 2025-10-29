@@ -16,6 +16,24 @@ Endpoints usados (descubiertos en el backend `app/main.py`):
 - GET /api/events/{id_dispositivo}?n=10 -> devuelve los últimos n eventos (historial)
 - WS /ws/monitor -> WebSocket para recibir broadcasts de eventos
 
+Monitor independiente:
+
+- Se agregó una aplicación de monitoreo separada en `monitor/index.html` (carpeta `FRONDEND/monitor`).
+- Archivos: `FRONDEND/monitor/index.html`, `FRONDEND/monitor/assets/js/monitor.js`, `FRONDEND/monitor/assets/css/monitor.css`.
+- El monitor carga historial via `GET /api/events/{id_dispositivo}?n=` y puede conectarse a `ws://<host>/ws/monitor` o `wss://` según el protocolo.
+
+Cómo abrir el monitor:
+
+1. Desde la carpeta `FRONDEND` sirve estático (o sube `monitor` a GitHub Pages):
+
+```powershell
+cd FRONDEND
+python -m http.server 8000
+# abrir http://localhost:8000/monitor/
+```
+
+2. Ajusta la IP/PUERTO en `FRONDEND/monitor/assets/js/monitor.js` si tu backend no está en `52.4.229.72:5500`.
+
 Cómo probar localmente (desde la carpeta `FRONDEND`):
 
 1. Servir estático con Python (Windows PowerShell):

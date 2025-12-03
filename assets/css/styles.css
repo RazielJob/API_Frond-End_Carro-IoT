@@ -1,212 +1,1650 @@
 /* ========================================
-   IoT Control - Estilos Minimalistas
+   IoT Gaming Control - Estilos
    ======================================== */
 
-/* Variables de color */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap");
+
+/* Variables */
 :root {
-  --color-primary: #2563eb;
-  --color-teal: #14b8a6;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-success: #10b981;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-600: #6b7280;
-  --color-gray-800: #1f2937;
+  --neon-blue: #00f3ff;
+  --neon-pink: #ff006e;
+  --neon-purple: #8b5cf6;
+  --neon-green: #00ff88;
+  --neon-orange: #fbbf24;
+  --dark-bg: #0a0e27;
+  --card-bg: #131831;
+  --accent-bg: #1a1f3a;
 }
 
-/* Reset y base */
-body {
-  background: #fafafa;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", sans-serif;
-  color: #333;
-}
-
-/* Cards con diseño limpio */
-.card {
-  border-radius: 12px;
-  border: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-}
-
-.shadow-sm {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
-}
-
-/* Grid de controles - Layout similar a la imagen */
-.control-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  max-width: 100%;
-}
-
-/* Botones de control */
-.btn-control {
-  padding: 14px 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  transition: all 0.2s ease;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.btn-control:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
-}
-
-.btn-control:active {
-  transform: translateY(0);
-}
-
-/* Colores de botones */
-.btn-teal {
-  background: var(--color-teal);
-  color: white;
-  border-color: var(--color-teal);
-}
-
-.btn-teal:hover {
-  background: #0f9b8e;
-  border-color: #0f9b8e;
-}
-
-.btn-primary {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
-}
-
-.btn-primary:hover {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
-}
-
-.btn-warning {
-  background: var(--color-warning);
-  border-color: var(--color-warning);
-  color: white;
-}
-
-.btn-warning:hover {
-  background: #d97706;
-  border-color: #d97706;
-}
-
-.btn-danger {
-  background: var(--color-danger);
-  border-color: var(--color-danger);
-}
-
-.btn-danger:hover {
-  background: #dc2626;
-  border-color: #dc2626;
-}
-
-/* Log de eventos */
-#events {
-  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code",
-    "Droid Sans Mono", "Source Code Pro", monospace;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  background: var(--color-gray-100);
-}
-
-#events div {
-  padding: 6px 8px;
-  border-bottom: 1px solid var(--color-gray-200);
-  word-wrap: break-word;
-}
-
-#events div:last-child {
-  border-bottom: none;
-}
-
-/* Navbar */
-.navbar {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-brand {
-  font-size: 1.1rem;
-}
-
-/* Input groups minimalistas */
-.input-group-text {
-  background: white;
-  border-color: var(--color-gray-200);
-  color: var(--color-gray-600);
-  font-size: 0.85rem;
-}
-
-.form-control-sm {
-  border-color: var(--color-gray-200);
-}
-
-.form-control-sm:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.1);
-}
-
-/* Pre tags */
-pre {
-  font-size: 0.8rem;
+/* Reset y Base */
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Badges */
-.badge {
-  font-weight: 500;
-  padding: 0.35em 0.65em;
+body {
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+  font-family: "Rajdhani", sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Botones pequeños */
-.btn-sm {
-  font-size: 0.8rem;
-  padding: 0.375rem 0.75rem;
-  border-radius: 6px;
+/* Efecto de fondo animado */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(0, 243, 255, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 0, 110, 0.08) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 0;
+  animation: bgPulse 10s ease-in-out infinite;
 }
 
-/* Status text */
-#statusText {
-  color: var(--color-gray-600);
-  font-weight: 500;
+@keyframes bgPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
-/* Footer */
-footer code {
-  background: var(--color-gray-100);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.85em;
+.container-fluid {
+  position: relative;
+  z-index: 1;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-  .control-grid {
-    grid-template-columns: repeat(3, 1fr);
+/* ========================================
+   NAVBAR GAMING STYLE
+   ======================================== */
+.navbar {
+  background: rgba(19, 24, 49, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--neon-blue);
+  box-shadow: 0 4px 20px rgba(0, 243, 255, 0.3);
+  padding: 0.8rem 0;
+}
+
+/* ========================================
+   BRAND CON LOGO PERSONALIZADO
+   ======================================== */
+.navbar-brand {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-shadow: 0 0 30px rgba(0, 243, 255, 0.5);
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+}
+
+.brand-logo {
+  height: 40px;
+  width: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px var(--neon-blue));
+  transition: all 0.3s ease;
+}
+
+.brand-logo:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 15px var(--neon-blue));
+}
+
+.brand-text {
+  background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Si prefieres mantener el emoji junto al logo, puedes agregar: */
+.brand-with-emoji {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Estilos responsivos para el logo */
+@media (max-width: 768px) {
+  .brand-logo {
+    height: 32px;
+    width: 32px;
   }
 
-  .btn-control {
-    font-size: 0.75rem;
-    padding: 12px 6px;
+  .navbar-brand {
+    font-size: 1.2rem;
+    gap: 0.5rem;
   }
 }
 
 @media (max-width: 576px) {
-  .control-grid {
-    gap: 6px;
+  .brand-logo {
+    height: 28px;
+    width: 28px;
   }
 
-  .btn-control {
-    font-size: 0.7rem;
-    padding: 10px 4px;
+  .navbar-brand {
+    font-size: 1rem;
   }
+}
+
+/* ========================================
+   GAMING CARDS
+   ======================================== */
+.gaming-card {
+  background: rgba(19, 24, 49, 0.9);
+  border: 2px solid rgba(0, 243, 255, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+  backdrop-filter: blur(10px);
+}
+
+.gaming-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--neon-blue),
+    transparent
+  );
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.gaming-card:hover {
+  border-color: var(--neon-blue);
+  box-shadow: 0 8px 32px rgba(0, 243, 255, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.card-header-gaming {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 243, 255, 0.15),
+    rgba(139, 92, 246, 0.15)
+  );
+  border-bottom: 1px solid rgba(0, 243, 255, 0.3);
+  padding: 1rem 1.5rem;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-icon {
+  font-size: 1.3rem;
+  filter: drop-shadow(0 0 8px var(--neon-blue));
+}
+
+/* ========================================
+   CONTROLLER LAYOUT
+   ======================================== */
+.controller-container {
+  display: grid;
+  grid-template-areas:
+    "speed speed speed"
+    "tl1 fw tr1"
+    "l360 l90 stop r90 r360"
+    "bl bk br";
+  gap: 8px;
+  padding: 0.5rem;
+  max-width: 100%;
+}
+
+.btn-speed-container {
+  grid-area: speed;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+#btnTurnLeft {
+  grid-area: tl1;
+}
+#btnForward {
+  grid-area: fw;
+}
+#btnTurnRight {
+  grid-area: tr1;
+}
+#btn360Left {
+  grid-area: l360;
+}
+#btn90Left {
+  grid-area: l90;
+}
+#btnStop {
+  grid-area: stop;
+}
+#btn90Right {
+  grid-area: r90;
+}
+#btn360Right {
+  grid-area: r360;
+}
+#btnLeft {
+  grid-area: bl;
+}
+#btnBack {
+  grid-area: bk;
+}
+#btnRight {
+  grid-area: br;
+}
+
+/* ========================================
+   GAMING BUTTONS
+   ======================================== */
+.btn-gaming {
+  position: relative;
+  padding: 1rem 0.8rem;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 2px solid;
+  border-radius: 12px;
+  background: rgba(19, 24, 49, 0.8);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 70px;
+}
+
+.btn-gaming::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-gaming:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-gaming:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.btn-gaming:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-icon {
+  font-size: 1.5rem;
+  display: block;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.btn-text {
+  font-size: 0.7rem;
+  line-height: 1.1;
+  text-align: center;
+}
+
+/* Button Color Variants */
+.btn-forward {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.btn-forward:hover {
+  background: rgba(0, 243, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 243, 255, 0.6);
+}
+
+.btn-turn {
+  border-color: var(--neon-green);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.btn-turn:hover {
+  background: rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+}
+
+.btn-rotate {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.btn-rotate:hover {
+  background: rgba(139, 92, 246, 0.2);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
+}
+
+.btn-stop {
+  border-color: var(--neon-pink);
+  box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+}
+
+.btn-stop:hover {
+  background: rgba(255, 0, 110, 0.2);
+  box-shadow: 0 0 30px rgba(255, 0, 110, 0.6);
+}
+
+.btn-back {
+  border-color: var(--neon-orange);
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+}
+
+.btn-back:hover {
+  background: rgba(251, 191, 36, 0.2);
+  box-shadow: 0 0 30px rgba(251, 191, 36, 0.6);
+}
+
+/* Speed Buttons */
+.btn-speed {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.75rem;
+  border-radius: 25px;
+  min-height: auto;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.btn-speed .btn-icon {
+  font-size: 1.2rem;
+}
+
+.btn-speed-down {
+  border-color: #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.btn-speed-down:hover {
+  background: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+}
+
+.btn-speed-normal {
+  border-color: #6b7280;
+  box-shadow: 0 0 15px rgba(107, 114, 128, 0.3);
+}
+
+.btn-speed-normal:hover {
+  background: rgba(107, 114, 128, 0.2);
+  box-shadow: 0 0 25px rgba(107, 114, 128, 0.6);
+}
+
+.btn-speed-up {
+  border-color: #10b981;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+.btn-speed-up:hover {
+  background: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+}
+
+/* ========================================
+   STATUS DISPLAY
+   ======================================== */
+.status-display {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.status-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.7rem;
+  color: #6b7280;
+  letter-spacing: 2px;
+  margin-bottom: 0.3rem;
+}
+
+#statusText {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+  letter-spacing: 1px;
+}
+
+/* ========================================
+   FORM CONTROLS GAMING STYLE
+   ======================================== */
+.form-control-gaming {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.form-control-gaming:focus {
+  background: rgba(0, 0, 0, 0.6);
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+  color: #fff;
+  outline: none;
+}
+
+.form-label-gaming {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  color: var(--neon-blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* ========================================
+   MANUAL SECTION
+   ======================================== */
+.manual-section {
+  border-top: 1px solid rgba(0, 243, 255, 0.2);
+  padding-top: 1rem;
+}
+
+.section-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  color: var(--neon-purple);
+  letter-spacing: 1px;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.input-group-gaming {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.input-label {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.info-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.5;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border-left: 2px solid rgba(0, 243, 255, 0.3);
+}
+
+.output-display {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.8rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  max-height: 120px;
+  overflow: auto;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.output-display::-webkit-scrollbar {
+  width: 6px;
+}
+
+.output-display::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.output-display::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 10px;
+}
+
+/* ========================================
+   MONITOR SECTION (MEJORADO)
+   ======================================== */
+.events-container {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(0, 243, 255, 0.2);
+  border-radius: 10px;
+  padding: 0.8rem;
+  max-height: 380px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: "Courier New", monospace;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+#events {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#events::-webkit-scrollbar {
+  width: 10px;
+}
+
+#events::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+#events::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+}
+
+#events::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-pink);
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.6);
+}
+
+#events > div {
+  padding: 0.8rem;
+  background: rgba(0, 243, 255, 0.08);
+  border-left: 3px solid var(--neon-blue);
+  border-radius: 6px;
+  animation: fadeIn 0.3s ease;
+  line-height: 1.5;
+  word-break: break-word;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+#events > div:hover {
+  background: rgba(0, 243, 255, 0.15);
+  border-left-color: var(--neon-pink);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
+   WEBSOCKET BADGE
+   ======================================== */
+.ws-badge {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.ws-connected {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--neon-green);
+  border: 1px solid var(--neon-green);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+}
+
+.ws-disconnected {
+  background: rgba(107, 114, 128, 0.2);
+  color: #9ca3af;
+  border: 1px solid #6b7280;
+}
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
+.btn-action {
+  font-family: "Rajdhani", sans-serif;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.btn-action:hover {
+  transform: translateY(-2px);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+}
+
+.btn-action-primary {
+  background: rgba(0, 243, 255, 0.1);
+  border-color: var(--neon-blue);
+  color: var(--neon-blue);
+}
+
+.btn-action-primary:hover {
+  background: rgba(0, 243, 255, 0.2);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+.btn-action-success {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: var(--neon-green);
+  color: var(--neon-green);
+}
+
+.btn-action-success:hover {
+  background: rgba(0, 255, 136, 0.2);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.btn-action-danger {
+  background: rgba(255, 0, 110, 0.1);
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+}
+
+.btn-action-danger:hover {
+  background: rgba(255, 0, 110, 0.2);
+  box-shadow: 0 0 15px rgba(255, 0, 110, 0.4);
+}
+
+.btn-action-secondary {
+  background: rgba(107, 114, 128, 0.1);
+  border-color: #6b7280;
+  color: #9ca3af;
+}
+
+.btn-action-secondary:hover {
+  background: rgba(107, 114, 128, 0.2);
+  box-shadow: 0 0 10px rgba(107, 114, 128, 0.3);
+}
+
+.controls-footer {
+  border-top: 1px solid rgba(0, 243, 255, 0.2);
+  padding-top: 1rem;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer-gaming {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  text-align: center;
+  border-top: 1px solid rgba(0, 243, 255, 0.2);
+}
+
+.footer-content {
+  font-family: "Orbitron", sans-serif;
+  font-size: 0.85rem;
+  color: #6b7280;
+  letter-spacing: 1px;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 992px) {
+  .controller-container {
+    gap: 6px;
+    padding: 0.3rem;
+  }
+
+  .btn-gaming {
+    padding: 0.8rem 0.5rem;
+    min-height: 60px;
+    font-size: 0.7rem;
+  }
+
+  .btn-icon {
+    font-size: 1.3rem;
+  }
+
+  .btn-text {
+    font-size: 0.65rem;
+  }
+
+  .events-container {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .controller-container {
+    gap: 5px;
+  }
+
+  .btn-gaming {
+    padding: 0.6rem 0.3rem;
+    min-height: 55px;
+    font-size: 0.65rem;
+  }
+
+  .btn-icon {
+    font-size: 1.2rem;
+  }
+
+  .btn-text {
+    font-size: 0.6rem;
+  }
+
+  .btn-speed {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.7rem;
+  }
+
+  .card-header-gaming {
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+}
+
+/* Touch devices optimization */
+@media (hover: none) {
+  .btn-gaming:hover,
+  .btn-action:hover {
+    transform: none;
+  }
+}
+/* ========================================
+   RESPONSIVE SIN SCROLL - NUEVAS REGLAS
+   ======================================== */
+
+/* Asegurar que el viewport ocupe toda la pantalla sin scroll */
+html,
+body {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+/* Contenedor principal ocupa todo el espacio disponible */
+.container-fluid {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+}
+
+/* Ajustar altura máxima para prevenir scroll */
+.gaming-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+}
+
+/* Ajustes específicos para columnas */
+.row.g-4 {
+  height: 100%;
+}
+
+section.col-lg-6,
+section.col-lg-12,
+section.col-xl-5,
+section.col-xl-4,
+section.col-xl-3 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Ajustar el control octagonal para pantallas pequeñas */
+@media (max-width: 1400px) {
+  .octagonal-controller {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 1200px) {
+  .octagonal-controller {
+    transform: scale(0.8);
+  }
+
+  .speed-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-speed-center {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 992px) {
+  /* En tablets, ajustar altura de tarjetas */
+  .row.g-4 {
+    min-height: auto;
+  }
+
+  section.col-lg-6,
+  section.col-xl-5,
+  section.col-xl-4,
+  section.col-xl-3 {
+    min-height: 500px;
+  }
+
+  .octagonal-controller {
+    transform: scale(0.7);
+  }
+
+  /* Ajustar eventos container */
+  .events-container {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* En móviles, reorganizar en una sola columna */
+  .row.g-4 {
+    flex-direction: column;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  section.col-lg-6,
+  section.col-xl-5,
+  section.col-xl-4,
+  section.col-xl-3 {
+    min-height: 450px;
+    margin-bottom: 1rem;
+  }
+
+  .octagonal-controller {
+    transform: scale(0.6);
+    margin: -20px auto;
+  }
+
+  /* Ajustar navbar para móviles */
+  .navbar-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .server-info {
+    font-size: 0.8rem;
+  }
+
+  /* Reducir padding general */
+  .container-fluid {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ajustes para móviles pequeños */
+  .octagonal-controller {
+    transform: scale(0.5);
+    margin: -40px auto;
+  }
+
+  .card-header-gaming {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-speed-center {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.6rem;
+    min-width: 70px;
+  }
+
+  /* Ajustar inputs para móviles */
+  .form-control-gaming {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Footer más compacto */
+  .footer-gaming {
+    margin-top: 1rem;
+    padding: 1rem 0;
+  }
+
+  .footer-content {
+    font-size: 0.7rem;
+  }
+}
+
+/* Ajustar el events container para no causar scroll */
+.events-container {
+  max-height: 200px;
+}
+
+/* Asegurar que los output displays no causen scroll */
+.output-display {
+  max-height: 100px;
+}
+
+/* Optimizar botones para pantallas táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .btn-gaming,
+  .btn-action,
+  .btn-speed-center {
+    min-height: 44px; /* Tamaño mínimo recomendado para toques */
+    padding: 12px;
+  }
+
+  .btn-icon {
+    font-size: 1.8rem; /* Íconos más grandes para toques */
+  }
+}
+
+/* Ajustar altura del control octagonal dinámicamente */
+@media (max-height: 800px) {
+  .octagonal-controller {
+    transform: scale(0.8);
+  }
+
+  .events-container {
+    max-height: 150px;
+  }
+}
+
+@media (max-height: 600px) {
+  .octagonal-controller {
+    transform: scale(0.6);
+  }
+
+  .card-body {
+    padding: 0.8rem;
+  }
+
+  .manual-section {
+    padding-top: 0.5rem;
+  }
+}
+
+/* Clase helper para ocultar scroll pero mantener funcionalidad */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+/* ========================================
+   ELIMINAR TODOS LOS SCROLLBARS INTERNOS
+   ======================================== */
+
+/* 1. Eliminar scroll del body y contenedor principal */
+html,
+body {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+}
+
+/* 2. Contenedor principal sin scroll */
+.container-fluid {
+  flex: 1;
+  overflow: hidden; /* Cambiado de auto a hidden */
+  padding: 10px;
+  max-height: calc(
+    100vh - 120px
+  ); /* Altura restante después del nav y footer */
+}
+
+/* 3. Row principal ocupa todo el espacio sin scroll */
+.row.g-4 {
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* 4. Cada sección/columna se ajusta sin scroll */
+section[class*="col-"] {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0; /* IMPORTANTE: permite que se comprima */
+}
+
+/* 5. Tarjetas gaming se expanden sin scroll */
+.gaming-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Permite compresión */
+}
+
+/* 6. Cuerpo de tarjetas SIN scroll - contenido se ajusta */
+.card-body {
+  flex: 1;
+  overflow: hidden; /* Cambiado de auto a hidden */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 15px;
+}
+
+/* 7. Ajustar altura máxima del control octagonal */
+.octagonal-controller {
+  flex-shrink: 0; /* No se reduce */
+  margin: 10px auto;
+  max-height: 320px; /* Altura máxima fija */
+}
+
+/* 8. Contenedor de eventos se ajusta sin scroll */
+.events-container {
+  flex: 1;
+  overflow: hidden; /* Sin scroll */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: none;
+}
+
+/* 9. Contenido de eventos que se ajusta */
+#events {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* 10. Output displays sin scroll - altura fija */
+.output-display {
+  height: 80px; /* Altura fija en lugar de max-height */
+  overflow: hidden;
+  margin: 5px 0;
+}
+
+/* 11. Ajustar manual section para que no haga scroll */
+.manual-section {
+  flex-shrink: 0; /* No se reduce */
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 243, 255, 0.2);
+}
+
+/* 12. Controls footer fijo en la parte inferior */
+.controls-footer {
+  flex-shrink: 0; /* No se reduce */
+  margin-top: auto; /* Se empuja hacia abajo */
+  padding-top: 10px;
+}
+
+/* 13. Speed controls centrados y ajustados */
+.speed-controls {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.btn-speed-center {
+  flex: 1;
+  min-width: 80px;
+  max-width: 120px;
+}
+
+/* 14. Ajustar el status display */
+.status-display {
+  margin: 10px 0;
+  padding: 10px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* 15. Ajustar inputs groups */
+.input-group-gaming {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  flex-wrap: wrap;
+}
+
+/* 16. Ajustes responsivos para pantallas más pequeñas */
+
+/* Para laptops/desktops medianos */
+@media (max-width: 1400px) {
+  .octagonal-controller {
+    transform: scale(0.85);
+    margin: 5px auto;
+  }
+
+  .btn-speed-center {
+    min-width: 70px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Para tablets grandes */
+@media (max-width: 1200px) {
+  .octagonal-controller {
+    transform: scale(0.75);
+    max-height: 280px;
+  }
+
+  .card-body {
+    padding: 12px;
+  }
+
+  .btn-gaming {
+    padding: 10px 8px;
+    min-height: 60px;
+  }
+}
+
+/* Para tablets */
+@media (max-width: 992px) {
+  .container-fluid {
+    max-height: calc(100vh - 100px);
+  }
+
+  .row.g-4 {
+    gap: 15px;
+  }
+
+  section[class*="col-"] {
+    min-height: 450px;
+  }
+
+  .octagonal-controller {
+    transform: scale(0.65);
+    max-height: 250px;
+  }
+
+  /* Reducir aún más el tamaño de botones */
+  .btn-gaming {
+    padding: 8px 6px;
+    min-height: 55px;
+    font-size: 0.7rem;
+  }
+
+  .btn-icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* Para móviles grandes */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto; /* Permitir scroll solo en móviles si es necesario */
+  }
+
+  .container-fluid {
+    overflow-y: auto;
+    max-height: none;
+  }
+
+  .row.g-4 {
+    flex-direction: column;
+    height: auto;
+  }
+
+  section[class*="col-"] {
+    min-height: 400px;
+    height: auto;
+  }
+
+  .octagonal-controller {
+    transform: scale(0.6);
+    max-height: 220px;
+    margin: 0 auto;
+  }
+
+  /* Stack vertical para botones de velocidad */
+  .speed-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-speed-center {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .output-display {
+    height: 60px;
+  }
+}
+
+/* Para móviles pequeños */
+@media (max-width: 576px) {
+  section[class*="col-"] {
+    min-height: 350px;
+  }
+
+  .octagonal-controller {
+    transform: scale(0.5);
+    max-height: 200px;
+  }
+
+  .gaming-card {
+    margin-bottom: 10px;
+  }
+
+  .card-header-gaming {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .btn-gaming {
+    min-height: 50px;
+    padding: 6px 4px;
+    font-size: 0.65rem;
+  }
+}
+
+/* Para alturas de pantalla pequeñas */
+@media (max-height: 800px) {
+  .octagonal-controller {
+    transform: scale(0.7);
+    max-height: 250px;
+  }
+
+  .btn-gaming {
+    min-height: 55px;
+    padding: 8px 6px;
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+}
+
+@media (max-height: 600px) {
+  .octagonal-controller {
+    transform: scale(0.6);
+    max-height: 200px;
+  }
+
+  .btn-gaming {
+    min-height: 45px;
+    padding: 6px 4px;
+    font-size: 0.6rem;
+  }
+
+  .btn-icon {
+    font-size: 1rem;
+  }
+
+  .card-header-gaming {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* 17. Clase para ocultar completamente scrollbars */
+.scroll-hidden {
+  overflow: hidden !important;
+}
+
+.scroll-hidden::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* 18. Asegurar que todos los contenedores internos no tengan scroll */
+.gaming-card * {
+  max-height: none !important;
+}
+
+/* 19. Ajuste específico para el panel de monitor */
+#events {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#events > div {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  line-height: 1.3;
+}
+
+/* 20. Footer ajustado */
+.footer-gaming {
+  flex-shrink: 0;
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.footer-content {
+  font-size: 0.8rem;
+  padding: 0 10px;
+}
+
+/* 21. Ajuste final para garantizar que nada haga scroll */
+* {
+  box-sizing: border-box;
+}
+
+/* Garantizar que los inputs no causen desbordamiento */
+.form-control-gaming {
+  max-width: 100%;
+}
+
+/* Ajustar los botones de acción para que sean compactos */
+.btn-action {
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+/* ========================================
+   AJUSTES PARA PANEL "ÚLTIMO EVENTO"
+   ======================================== */
+
+/* 1. Panel completo de Último Evento */
+section.col-lg-12.col-xl-3 .gaming-card:first-child {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. Cuerpo del panel con espacio flexible */
+section.col-lg-12.col-xl-3 .gaming-card:first-child .card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding: 15px;
+  gap: 10px;
+}
+
+/* 3. Inputs compactos */
+section.col-lg-12.col-xl-3 .gaming-card:first-child .form-control-gaming {
+  height: 40px;
+  padding: 8px 12px;
+}
+
+/* 4. Botón OBTENER ÚLTIMO */
+section.col-lg-12.col-xl-3 .gaming-card:first-child .btn-action-primary {
+  height: 40px;
+  padding: 8px;
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+/* 5. OUTPUT DISPLAY ESPECIAL para Último Evento */
+#lastOutput {
+  flex: 1 !important;
+  min-height: 150px !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: auto !important; /* Permitir scroll solo aquí */
+  overflow-x: hidden !important;
+  font-size: 0.8rem !important;
+  line-height: 1.3 !important;
+  padding: 12px !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid rgba(0, 243, 255, 0.3) !important;
+  border-radius: 8px !important;
+  margin: 0 !important;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
+
+/* 6. Scrollbar personalizado para el output */
+#lastOutput::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+#lastOutput::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 10px !important;
+}
+
+#lastOutput::-webkit-scrollbar-thumb {
+  background: var(--neon-blue) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.5) !important;
+}
+
+#lastOutput::-webkit-scrollbar-thumb:hover {
+  background: var(--neon-pink) !important;
+}
+
+/* 7. Ajustes para el panel OBSTÁCULO (debajo) */
+section.col-lg-12.col-xl-3 .gaming-card:last-child .card-body {
+  padding: 15px;
+}
+
+section.col-lg-12.col-xl-3 .gaming-card:last-child .btn-action-danger {
+  height: 45px;
+  font-size: 0.9rem;
+  margin: 10px 0;
+}
+
+/* 8. Responsive para Último Evento */
+
+@media (max-width: 1200px) {
+  section.col-lg-12.col-xl-3 {
+    min-height: 650px !important;
+  }
+
+  #lastOutput {
+    min-height: 120px !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (max-width: 992px) {
+  section.col-lg-12.col-xl-3 {
+    min-height: 600px !important;
+  }
+
+  section.col-lg-12.col-xl-3 .gaming-card:first-child {
+    height: 400px !important;
+  }
+
+  #lastOutput {
+    min-height: 100px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  section.col-lg-12.col-xl-3 {
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  section.col-lg-12.col-xl-3 .gaming-card:first-child {
+    height: 350px !important;
+    margin-bottom: 15px !important;
+  }
+
+  section.col-lg-12.col-xl-3 .gaming-card:last-child {
+    height: 250px !important;
+  }
+
+  #lastOutput {
+    min-height: 150px !important;
+  }
+}
+
+@media (max-height: 800px) {
+  section.col-lg-12.col-xl-3 .gaming-card:first-child {
+    height: 320px !important;
+  }
+
+  #lastOutput {
+    min-height: 120px !important;
+  }
+}
+
+@media (max-height: 600px) {
+  section.col-lg-12.col-xl-3 .gaming-card:first-child {
+    height: 280px !important;
+  }
+
+  #lastOutput {
+    min-height: 100px !important;
+    font-size: 0.7rem !important;
+  }
+}
+
+/* 9. Estilo para JSON con colores (opcional pero recomendado) */
+#lastOutput {
+  color: #00ff88 !important;
+}
+
+/* Clases para sintaxis JSON coloreada */
+.json-key {
+  color: #00f3ff !important;
+}
+
+.json-string {
+  color: #ff006e !important;
+}
+
+.json-number {
+  color: #fbbf24 !important;
+}
+
+.json-boolean {
+  color: #8b5cf6 !important;
+}
+/* ========================================
+   AJUSTE SIMPLE PARA SECUENCIA ALEATORIA
+   ======================================== */
+
+/* Solo el output display de secuencia */
+#seqOutput {
+  min-height: 80px !important;
+  max-height: 200px !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  font-size: 0.9rem !important;
+  line-height: 1.4 !important;
+  padding: 10px !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  border: 1px solid rgba(0, 255, 136, 0.3) !important;
+  margin: 5px 0 0 0 !important;
+  white-space: pre-wrap !important;
+}
+
+/* Scrollbar minimalista */
+#seqOutput::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+#seqOutput::-webkit-scrollbar-thumb {
+  background: var(--neon-green) !important;
+  border-radius: 3px !important;
 }

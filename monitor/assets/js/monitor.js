@@ -18,6 +18,68 @@ function updateEventCount() {
   }
 }
 
+// Función para loguear eventos (similar a main.js)
+function logEvent(obj) {
+  const events = document.getElementById("events");
+  const time = new Date().toLocaleTimeString();
+  const line = document.createElement("div");
+  line.className = "list-group-item";
+  line.textContent = `[${time}] ${
+    typeof obj === "string" ? obj : JSON.stringify(obj)
+  }`;
+  events.prepend(line);
+}
+
+// Función auxiliar: generar secuencia aleatoria
+function generateRandomSequence(length = 5) {
+  const operaciones = [1, 2, 3, 4, 5];
+  const sequence = [];
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * operaciones.length);
+    sequence.push(operaciones[randomIndex]);
+  }
+  return sequence;
+}
+
+// Función auxiliar: enviar secuencia al backend
+async function postSequence(nombre, movimientos) {
+  const deviceId = Number(document.getElementById("deviceId").value || 1);
+  const payload = {
+    nombre: nombre,
+    movimientos: movimientos,
+    id_dispositivo: deviceId,
+    id_cliente: 1,
+  };
+
+  try {
+    const res = await fetch(`${BASE_URL}/api/sequence`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    let data = null;
+    try {
+      data = await res.json();
+    } catch {
+      data = await res.text().catch(() => null);
+    }
+    if (!res.ok) {
+      logEvent({
+        type: "sequence:error",
+        status: res.status,
+        statusText: res.statusText,
+        body: data,
+      });
+      return { ok: false, status: res.status, body: data };
+    }
+    logEvent({ type: "sequence:response", ok: true, data });
+    return data;
+  } catch (err) {
+    logEvent({ type: "sequence:error", message: err.message });
+    throw err;
+  }
+}
+
 function renderEvent(ev) {
   const container = document.getElementById("events");
 
@@ -268,6 +330,17 @@ window.addEventListener("DOMContentLoaded", () => {
       startAutoRefresh();
     }
   });
+
+  // Generar y ejecutar secuencia
+  document
+    .getElementById("btnGenerateSeq")
+    .addEventListener("click", async () => {
+      const length = 5; // secuencia de 5 movimientos
+      const seq = generateRandomSequence(length);
+      const nombre = `Secuencia ${new Date().toLocaleTimeString()}`;
+      logEvent({ type: "sequence:generated", data: seq, nombre: nombre });
+      await postSequence(nombre, seq);
+    });
 
   // Optional: auto-load on open
   loadHistory();

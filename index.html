@@ -1,70 +1,403 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IoT Carrito Frontend</title>
-    <!-- Bootstrap CSS -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IoT Carrito</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="assets/img/omega.png" />
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">IoT Carrito</a>
+    <!-- Navbar Gaming -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid px-4">
+        <a class="navbar-brand" href="#">
+          <!-- Icono personalizado - reemplaza "assets/img/logo.png" con tu imagen -->
+          <img
+            src="assets/img/logo.jpeg"
+            alt="IoT Carrito Logo"
+            class="brand-logo"
+          />
+          <span class="brand-text">IOT CARRITO</span>
+        </a>
+        <div
+          class="navbar-nav ms-auto d-flex flex-row align-items-center gap-3"
+        >
+          <a class="nav-link-gaming" href="monitor/">
+            <span class="nav-icon">📊</span> Monitor
+          </a>
+          <span class="server-info">52.4.229.72:5500</span>
+        </div>
       </div>
     </nav>
 
-    <div class="container">
-      <h2>Enviar Movimiento</h2>
-      <form id="form-movimiento">
-        <div class="mb-3">
-          <label for="id_dispositivo" class="form-label">ID Dispositivo</label>
-          <input
-            type="number"
-            class="form-control"
-            id="id_dispositivo"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="id_cliente" class="form-label">ID Cliente</label>
-          <input type="number" class="form-control" id="id_cliente" required />
-        </div>
-        <div class="mb-3">
-          <label for="id_operacion" class="form-label">ID Operación</label>
-          <select class="form-select" id="id_operacion" required>
-            <option value="1">Movimiento 1</option>
-            <option value="2">Movimiento 2</option>
-            <option value="3">Detener / Obstáculo</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="id_obstaculo" class="form-label"
-            >ID Obstáculo (opcional)</label
-          >
-          <input type="number" class="form-control" id="id_obstaculo" />
-        </div>
-        <button type="submit" class="btn btn-primary">Enviar</button>
-      </form>
+    <main class="container-fluid mt-4 px-3">
+      <div class="row g-4">
+        <!-- 🎮 PANEL DE CONTROL PRINCIPAL -->
+        <section class="col-lg-6 col-xl-5">
+          <div class="gaming-card">
+            <div class="card-header-gaming">
+              <span class="header-icon">🎮</span> CONTROL PANEL
+            </div>
+            <div class="card-body p-3">
+              <!-- Device & Client IDs -->
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label-gaming">Device ID</label>
+                  <input
+                    id="deviceId"
+                    class="form-control-gaming"
+                    type="number"
+                    value="1"
+                  />
+                </div>
+                <div class="col-6">
+                  <label class="form-label-gaming">Client ID</label>
+                  <input
+                    id="clientId"
+                    class="form-control-gaming"
+                    type="number"
+                    value="1"
+                  />
+                </div>
+              </div>
 
-      <hr />
+              <!-- Status Display -->
+              <div class="status-display mb-3">
+                <div class="status-label">STATUS</div>
+                <div id="statusText">Esperando comando...</div>
+              </div>
 
-      <h2>Eventos recientes</h2>
-      <ul id="eventos-list" class="list-group"></ul>
-    </div>
+              <!-- OCTAGONAL CONTROLLER LAYOUT -->
+              <div class="octagonal-controller">
+                <!-- Centro con velocidades -->
+                <div class="controller-center">
+                  <div class="speed-controls">
+                    <button
+                      id="btnSpeedUp"
+                      class="btn-speed-center btn-speed-up"
+                      title="Aumentar Velocidad"
+                    >
+                      <span class="speed-icon">⚡</span>
+                      <span class="speed-text">RÁPIDO</span>
+                    </button>
+                    <button
+                      id="btnSpeedNormal"
+                      class="btn-speed-center btn-speed-normal"
+                      title="Velocidad Normal"
+                    >
+                      <span class="speed-icon">➖</span>
+                      <span class="speed-text">NORMAL</span>
+                    </button>
+                    <button
+                      id="btnSpeedDown"
+                      class="btn-speed-center btn-speed-down"
+                      title="Reducir Velocidad"
+                    >
+                      <span class="speed-icon">🐢</span>
+                      <span class="speed-text">LENTO</span>
+                    </button>
+                  </div>
+                </div>
 
-    <footer class="bg-dark text-white text-center py-2 mt-4">
-      Creado por Raziel Job
+                <!-- Botón Superior: Adelante -->
+                <button
+                  id="btnForward"
+                  class="octagonal-btn octagonal-top"
+                  title="Adelante (ID: 1)"
+                >
+                  <span class="btn-icon">⬆️</span>
+                  <span class="btn-label">ADELANTE</span>
+                </button>
+
+                <!-- Botón Superior Derecho: Giro Adelante Derecha -->
+                <button
+                  id="btnTurnRight"
+                  class="octagonal-btn octagonal-top-right"
+                  title="Giro Adelante Derecha (ID: 9)"
+                >
+                  <span class="btn-icon">↗️</span>
+                  <span class="btn-label">GIRO<br />90° IZQUIERDA</span>
+                </button>
+
+                <!-- Botón Derecho: Giro Atrás Derecha -->
+                <button
+                  id="btnRight"
+                  class="octagonal-btn octagonal-right"
+                  title="Giro Atrás Derecha (ID: 5)"
+                >
+                  <span class="btn-icon">➡️</span>
+                  <span class="btn-label">GIRO<br />Adelante DER</span>
+                </button>
+
+                <!-- Botón Inferior Derecho: 90° Derecha -->
+                <button
+                  id="btn90Right"
+                  class="octagonal-btn octagonal-bottom-right"
+                  title="90° Derecha (ID: 10)"
+                >
+                  <span class="btn-icon">↘️</span>
+                  <span class="btn-label">360°<br />DERECHA</span>
+                </button>
+
+                <!-- Botón Inferior: Atrás -->
+                <button
+                  id="btnBack"
+                  class="octagonal-btn octagonal-bottom"
+                  title="Atrás (ID: 2)"
+                >
+                  <span class="btn-icon">⬇️</span>
+                  <span class="btn-label">ATRÁS</span>
+                </button>
+
+                <!-- Botón Inferior Izquierdo: 90° Izquierda -->
+                <button
+                  id="btn90Left"
+                  class="octagonal-btn octagonal-bottom-left"
+                  title="90° Izquierda (ID: 7)"
+                >
+                  <span class="btn-icon">↙️</span>
+                  <span class="btn-label">GIRO°<br />ATRAS IZQ</span>
+                </button>
+
+                <!-- Botón Izquierdo: Giro Atrás Izquierda -->
+                <button
+                  id="btnLeft"
+                  class="octagonal-btn octagonal-left"
+                  title="Giro Atrás Izquierda (ID: 4)"
+                >
+                  <span class="btn-icon">⬅️</span>
+                  <span class="btn-label">GIRO<br />ADELANTE IZQ</span>
+                </button>
+
+                <!-- Botón Superior Izquierdo: Giro Adelante Izquierda -->
+                <button
+                  id="btnTurnLeft"
+                  class="octagonal-btn octagonal-top-left"
+                  title="Giro Adelante Izquierda (ID: 6)"
+                >
+                  <span class="btn-icon">↖️</span>
+                  <span class="btn-label">GIRO<br />ATRAS DER</span>
+                </button>
+
+                <!-- Botones adicionales en esquinas externas -->
+                <!-- 360° Izquierda -->
+                <button
+                  id="btn360Left"
+                  class="octagonal-btn octagonal-extra-left"
+                  title="360° Izquierda (ID: 8)"
+                >
+                  <span class="btn-icon">🔄</span>
+                  <span class="btn-label">90°<br />DERECHA</span>
+                </button>
+
+                <!-- Stop -->
+                <button
+                  id="btnStop"
+                  class="octagonal-btn octagonal-extra-top"
+                  title="Detener (ID: 3)"
+                >
+                  <span class="btn-icon">⏹️</span>
+                  <span class="btn-label">DETENER</span>
+                </button>
+
+                <!-- 360° Derecha -->
+                <button
+                  id="btn360Right"
+                  class="octagonal-btn octagonal-extra-right"
+                  title="360° Derecha (ID: 11)"
+                >
+                  <span class="btn-icon">🔁</span>
+                  <span class="btn-label">360°<br />IZQUIERDA</span>
+                </button>
+              </div>
+
+              <!-- Manual Operation -->
+              <div class="manual-section mt-4">
+                <div class="section-title">OPERACIÓN MANUAL</div>
+                <div class="input-group-gaming mb-3">
+                  <span class="input-label">ID Operación</span>
+                  <input
+                    id="opId"
+                    type="number"
+                    class="form-control-gaming flex-grow-1"
+                    value="1"
+                  />
+                  <button id="btnSendOp" class="btn-action btn-action-primary">
+                    ENVIAR
+                  </button>
+                </div>
+                <div class="info-text">
+                  IDs: 1=Adelante, 2=Atrás, 3=Detener, 4=Giro Atrás Izq, 5=Giro
+                  Atrás Der, 6=Giro Adelante Izq, 7=90° Izq, 8=360° Izq, 9=Giro
+                  Adelante Der, 10=90° Der, 11=360° Der
+                </div>
+              </div>
+
+              <!-- Random Sequence - Versión Mejorada -->
+              <div class="manual-section mt-3">
+                <div class="section-title">SECUENCIA ALEATORIA</div>
+                <div class="input-group-gaming mb-2">
+                  <span class="input-label">Longitud</span>
+                  <input
+                    id="seqLength"
+                    type="number"
+                    class="form-control-gaming"
+                    style="width: 80px"
+                    value="5"
+                    min="1"
+                    max="20"
+                  />
+                  <button
+                    id="btnGenerateSeq"
+                    class="btn-action btn-action-success"
+                  >
+                    GENERAR
+                  </button>
+                </div>
+                <div style="margin-top: 5px">
+                  <pre
+                    id="seqOutput"
+                    class="output-display"
+                    style="
+                      min-height: 80px;
+                      max-height: 200px;
+                      overflow-y: auto;
+                      padding: 10px;
+                    "
+                  ></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 📊 MONITOR EN TIEMPO REAL -->
+        <section class="col-lg-6 col-xl-4">
+          <div class="gaming-card">
+            <div class="card-header-gaming">
+              <span class="header-icon">📡</span> MONITOR TIEMPO REAL
+            </div>
+            <div class="card-body p-3">
+              <div id="wsStatus" class="mb-3 text-center">
+                <span class="ws-badge ws-disconnected">⚫ DESCONECTADO</span>
+              </div>
+
+              <div id="events" class="events-container"></div>
+
+              <div class="controls-footer mt-3">
+                <div class="d-flex flex-wrap gap-2">
+                  <button
+                    id="btnConnectWs"
+                    class="btn-action btn-action-success flex-grow-1"
+                  >
+                    🔌 Conectar WS
+                  </button>
+                  <button
+                    id="btnCheckBackend"
+                    class="btn-action btn-action-primary"
+                  >
+                    ✓ Check
+                  </button>
+                  <button
+                    id="btnLoadHistory"
+                    class="btn-action btn-action-primary"
+                  >
+                    📜 Historial
+                  </button>
+                  <input
+                    id="historyCount"
+                    type="number"
+                    value="10"
+                    min="1"
+                    class="form-control-gaming"
+                    style="width: 70px"
+                  />
+                  <button
+                    id="btnClearLog"
+                    class="btn-action btn-action-secondary"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 📋 ÚLTIMO EVENTO & OBSTÁCULO -->
+        <section class="col-lg-12 col-xl-3">
+          <!-- Último Evento -->
+          <div class="gaming-card mb-3">
+            <div class="card-header-gaming">
+              <span class="header-icon">🔍</span> ÚLTIMO EVENTO
+            </div>
+            <div class="card-body p-3">
+              <label class="form-label-gaming">ID Dispositivo</label>
+              <input
+                id="lastDeviceId"
+                type="number"
+                class="form-control-gaming mb-3"
+                value="1"
+              />
+              <button
+                id="btnGetLast"
+                class="btn-action btn-action-primary w-100 mb-2"
+              >
+                OBTENER ÚLTIMO
+              </button>
+              <pre id="lastOutput" class="output-display"></pre>
+            </div>
+          </div>
+
+          <!-- Obstáculo -->
+          <div class="gaming-card">
+            <div class="card-header-gaming">
+              <span class="header-icon">⚠️</span> OBSTÁCULO
+            </div>
+            <div class="card-body p-3">
+              <label class="form-label-gaming">ID Obstáculo</label>
+              <input
+                id="obstId"
+                type="number"
+                class="form-control-gaming mb-3"
+                value="1"
+              />
+              <button
+                id="btnSendObst"
+                class="btn-action btn-action-danger w-100"
+              >
+                ENVIAR OBSTÁCULO
+              </button>
+              <div class="info-text mt-2">
+                1=Adelante, 2=Adelante-Izq, 3=Adelante-Der, 4=Ambos, 5=Retrocede
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer-gaming">
+      <div class="container">
+        <div class="footer-content">
+          🎮 Gaming IoT Control System • Powered by ESP8266 • AWS Cloud
+          Infrastructure
+        </div>
+      </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Script principal -->
-    <script src="js/main.js"></script>
+    <script src="assets/js/main.js"></script>
   </body>
 </html>
